@@ -20,5 +20,16 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Stop existing Node.js process
+        run: |
+          PID=$(lsof -ti :3000)
+          if [ ! -z "$PID" ]; then
+            echo "Stopping existing Node.js process..."
+            kill $PID
+          else
+            echo "No existing Node.js process found."
+          fi
       - name: Deploy
         run: echo "Deploying to production server..."
+      - name: Start new process
+        run: npm start &

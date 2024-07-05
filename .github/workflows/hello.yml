@@ -1,0 +1,19 @@
+name: Hello world!
+
+on:
+  workflow_dispatch
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hello
+        run: echo "Hello, world! I'm using GitHub Actions with Act!"
+        
+  say-hi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hi
+        run: echo "Hi, world! I'm using GitHub Actions with Act!"

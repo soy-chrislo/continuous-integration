@@ -34,9 +34,10 @@ jobs:
         run: echo "Deploying to production server..."
       - name: Install PM2
         run: npm install pm2@latest -g
-
-      - name: Start application with PM2
-        run: pm2 start npm --name "express-server-3000" -- start
+      - name: Execute deploy script
+        run: bash run.sh
+      # - name: Start application with PM2
+      #   run: pm2 start npm --name "express-server-3000" -- start
       # - name: Start new process using tmux
       #   run: |
       #     tmux new -d -s node_3000_session "npm start"

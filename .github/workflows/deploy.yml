@@ -22,10 +22,11 @@ jobs:
         run: npm run build
       - name: Stop existing Node.js process
         run: |
-          PID=$(lsof -ti :3000)
+          set -e
+          PID=$(lsof -ti :3000 || true)
           if [ ! -z "$PID" ]; then
             echo "Stopping existing Node.js process..."
-            kill $PID
+            kill $PID || true
           else
             echo "No existing Node.js process found."
           fi

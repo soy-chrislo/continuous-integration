@@ -5,12 +5,14 @@
 	"type": "module",
 	"main": "index.js",
 	"scripts": {
-		"test": "node test/index.js"
+		"test": "vitest"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"express": "^4.19.2"
+		"express": "^4.19.2",
+		"supertest": "^7.0.0",
+		"vitest": "^1.6.0"
 	}
 }

@@ -32,5 +32,8 @@ jobs:
           fi
       - name: Deploy
         run: echo "Deploying to production server..."
-      - name: Start new process
-        run: nohup npm start > /dev/null 2>&1 &
+      - name: Start new process using tmux
+        run: |
+          tmux new -d -s node_3000_session "npm start"
+      # - name: Start new process
+      #   run: nohup npm start > /dev/null 2>&1 &

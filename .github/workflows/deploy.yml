@@ -33,4 +33,4 @@ jobs:
       - name: Deploy
         run: echo "Deploying to production server..."
       - name: Start new process
-        run: npm start &
+        run: nohup npm start > /dev/null 2>&1 &

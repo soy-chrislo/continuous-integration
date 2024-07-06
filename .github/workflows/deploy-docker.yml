@@ -68,18 +68,17 @@ jobs:
       #   run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
       - name: Pull the latest Docker image
         run: |
-          echo $(whoami)
-          sudo docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Stop the current Docker container
-        run: sudo docker stop express-app || true # Reemplaza 'my-container' con el nombre/ID de tu contenedor actual
+        run: docker stop express-app || true # Reemplaza 'my-container' con el nombre/ID de tu contenedor actual
 
       - name: Remove the current Docker container
-        run: sudo docker rm express-app || true # Asegúrate de que esto no elimine tus datos si están en volúmenes o enlazados
+        run: docker rm express-app || true # Asegúrate de que esto no elimine tus datos si están en volúmenes o enlazados
 
       - name: Start the new Docker container
         run: |
-          sudo docker run -d \
+          docker run -d \
           --name my-container \
           -p 80:80 \ # Asegúrate de ajustar los puertos según sea necesario
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}

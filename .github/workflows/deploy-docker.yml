@@ -68,7 +68,7 @@ jobs:
       #   run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
       - name: Pull the latest Docker image
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
 
       - name: Stop the current Docker container
         run: docker stop express-app || true # Reemplaza 'my-container' con el nombre/ID de tu contenedor actual

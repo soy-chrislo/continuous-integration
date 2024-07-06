@@ -14,21 +14,18 @@ env:
   IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/continuous-integration
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker-compose build --no-cache --force-rm 
-  test-docker:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Test the Docker image
-        run: docker-compose up -d 
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Build the Docker image
+  #     run: docker-compose build --no-cache --force-rm 
+  # test-docker:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Test the Docker image
+        # run: docker-compose up -d 
   deploy-docker:
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
@@ -58,3 +55,26 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  update-service:
+    name: Update Docker Service
+    needs: deploy-docker
+    runs-on: [self-hosted, linux]
+    steps:
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Pull the latest Docker image
+        run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+
+      - name: Stop the current Docker container
+        run: docker stop express-app || true # Reemplaza 'my-container' con el nombre/ID de tu contenedor actual
+
+      - name: Remove the current Docker container
+        run: docker rm express-app || true # Asegúrate de que esto no elimine tus datos si están en volúmenes o enlazados
+
+      - name: Start the new Docker container
+        run: |
+          docker run -d \
+          --name my-container \
+          -p 80:80 \ # Asegúrate de ajustar los puertos según sea necesario
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}

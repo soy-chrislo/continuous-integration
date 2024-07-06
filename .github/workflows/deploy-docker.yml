@@ -68,7 +68,7 @@ jobs:
       #   run: docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
       - name: Pull the latest Docker image
         run: |
-          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
 
       - name: Stop the current Docker container
         run: docker stop express-app || true # Reemplaza 'my-container' con el nombre/ID de tu contenedor actual
@@ -81,4 +81,4 @@ jobs:
           docker run -d \
           --name my-container \
           -p 80:80 \ # Asegúrate de ajustar los puertos según sea necesario
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main

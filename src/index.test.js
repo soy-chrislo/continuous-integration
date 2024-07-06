@@ -9,6 +9,6 @@ describe("GET /", () => {
 			.expect(200)
 			.expect("Content-Type", /text/);
 
-		expect(response.text).toEqual("Hello World");
+		expect(response.text).toEqual("Hello World Chrislo");
 	});
 });

@@ -81,4 +81,4 @@ jobs:
           docker run -d \
           --name my-container \
           -p 80:80 \ # Asegúrate de ajustar los puertos según sea necesario
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
